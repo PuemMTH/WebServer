@@ -1,0 +1,240 @@
+<% layout('layout') %>
+
+  <title>
+    <%= title %>
+  </title>
+  <%- include('Navbar') %>
+  <div class="container text-white">
+    <div class="position-relative overflow-hidden m-md-3 rounded" >
+      <!-- form search -->
+          <div class="container-fluid">
+              <div class="row my-2">
+                  <div class="col-md-12">
+                    <form autocomplete="off" class="row g-3" id="search_f">
+                      <div class="mb-3 text-start">
+                        <label for="" class="form-label "><i class="fas fa-search"></i> Search</label>
+                        <input type="text" class="form-control" id="search_onload" placeholder="พิมพ์ชื่อเรื่องได้ทีั่นี่เลย">
+                      </div>
+                      <div class="col-md-3 text-start">
+                        <label for="" class="form-label "><i class="fas fa-search"></i> Rateing</label>
+                        <select id="inputRate" class="form-select">
+                          <option value="no" selected>ทั้งหมด</option>
+                          <option value="yes">R+</option>
+                        </select>
+                      </div>
+                      <div class="col-md-3 text-start">
+                        <label for="" class="form-label "><i class="fas fa-search"></i> Air Time</label>
+                        <select id="inputStatus" class="form-select">
+                          <option value="all" selected>ทั้งหมด</option>
+                          <option>airing</option>
+                          <option>complete</option>
+                          <option>upcoming</option>
+                        </select>
+                      </div>
+                      <div class="col-md-3 text-start">
+                        <label for="" class="form-label "><i class="fas fa-search"></i> type</label>
+                        <select id="inputType" class="form-select">
+                          <option value="all" selected>ทั้งหมด</option>
+                          <option>tv</option>
+                          <option>movie</option>
+                          <option>ova</option>
+                          <option>special</option>
+                          <option>ona</option>
+                          <option>music</option>
+                        </select>
+                      </div>
+                      <div class="col-md-3 text-start">
+                        <label for="" class="form-label "><i class="fas fa-search"></i> sort by</label>
+                        <select id="inputSort" class="form-select">
+                          <option value="all" selected>mal_id</option>
+                          <option>title</option>
+                          <option>type</option>
+                          <option>rating</option>
+                          <option>start_date</option>
+                          <option>end_date</option>
+                          <option>episodes</option>
+                          <option>score</option>
+                          <option>scored_by</option>
+                          <option>rank</option>
+                          <option>popularity</option>
+                          <option>members</option>
+                          <option>favorites</option>
+                        </select>
+                      </div>
+                      <!-- submit -->
+                      <div class="text-end">
+                        <button type="submit" class="btn btn-primary">
+                          <i class="fas fa-search"></i> Search
+                        </button>
+                      </div>
+                    </form>
+                    <script>
+                      $('#search_f').submit(function(e){
+                        e.preventDefault();
+                        var search_onload = $('#search_onload').val();
+                        var inputRate = $('#inputRate').val();
+                        var inputStatus = $('#inputStatus').val();
+                        var inputType = $('#inputType').val();
+                        var inputSort = $('#inputSort').val();
+                        var url = 'browse?search='+search_onload+'&rate='+inputRate+'&status='+inputStatus+'&type='+inputType+'&sort='+inputSort;
+                        window.location.href = url;
+                      });
+                    </script>
+                  </div>
+              </div>
+                <h3 class="mt-2">
+                  ผลการค้นหา
+                </h3> 
+               <hr>
+               <!-- <div class="row my-2"> -->
+                <div class="container overflow-hidden">
+                    <div class="row g-1 text-dark h-100" id="over-add-card">
+                    <% for(let i = 0; i < dataAnime.length; i++){ %>
+                      <div class="col-6" style="height: 100%;"> 
+                        <div class="card mb-3">
+                          <div class="row no-gutters">
+                            <div class="col-md-4">
+                              <img src="<%= dataAnime[i].image %>" class="card-img" alt="<%= dataAnime[i].title %>" height="250px">
+                            </div>
+                            <div class="col-md-8">
+                              <div class="card-body">
+                                <h5 class="card-title">
+                                  <% if(dataAnime[i].title.length > 35){ %>
+                                    <%= dataAnime[i].title.substring(0,35) %>...
+                                  <% }else{ %>
+                                    <%= dataAnime[i].title %>
+                                  <% } %>
+                                </h5>
+                                <p class="card-text">
+                                  <span class="badge bg-danger"><%= dataAnime[i].season %></span>
+                                </p>
+                                <p class="card-text">
+                                  <small class="text-muted">
+                                    <% if(dataAnime[i].status){  %>
+                                      <span class="badge bg-info text-white"><%= dataAnime[i].status %></span>
+                                    <% }  %>
+                                    <% if(dataAnime[i].season){  %>
+                                      <span class="badge bg-info text-white"><%= dataAnime[i].season %></span>
+                                    <% }  %>
+                                    <% if(dataAnime[i].rating){  %>
+                                      <span class="badge bg-info text-white"><%= dataAnime[i].rating %></span>
+                                    <% }  %>
+                                    <% if(dataAnime[i].episodes){ %>
+                                      <span class="badge bg-info text-white"><%= dataAnime[i].episodes %> ep</span>
+                                    <% }  %>
+                                  </small>
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    <% } %>
+                  </div>
+                </div>
+
+            <script>
+                // infinite scroll
+                var page = 1;
+                var loading = false;
+                $(window).scroll(function() {
+                  if($(window).scrollTop() + $(window).height() >= $(document).height()) {
+                    page++;
+                    if(!loading) {
+                      loading = true;
+                      load_score_pop()
+                    }
+                  }
+              
+                  function load_score_pop(){
+                    console.log(page);
+                    $.ajax({
+                      url: `https://api.jikan.moe/v4/seasons/now?limit=12&page=${page}`,
+                      type: 'GET',
+                      success: function(data){
+                        data.data.map(function(item){
+                          console.log(item);
+                          var html = `
+                        <div class="col-6" style="height: 100%;"> 
+                          <div class="card mb-3">
+                            <div class="row no-gutters">
+                              <div class="col-md-4">
+                                <img src="${item.images.jpg.image_url}" class="card-img" alt="..." height="250px">
+                              </div>
+                              <div class="col-md-8">
+                                <div class="card-body">
+                                  <h5 class="card-title">
+                                    ${
+                                      item.title.length > 35 ? item.title.substring(0,35) + '...' : item.title
+                                    }
+                                  </h5>
+                                  <p class="card-text">
+                                    <span class="badge bg-danger">${item.season}</span>
+                                  </p>
+                                  <p class="card-text">
+                                    <small class="text-muted">
+                                      <span class="badge bg-info text-white">${item.status}</span>
+                                      <span class="badge bg-info text-white">${item.season}</span>
+                                      <span class="badge bg-info text-white">${item.rating}</span>
+                                      ${item.episodes === null ? `` : '<span class="badge bg-info text-white">'+item.episodes+'</span>'}
+                                    </small>
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                          `
+                          $('#over-add-card').append(html);
+                          // over-add-card
+                          loading = false;
+                        })
+                      }
+                    });
+                  }
+                });
+              </script>
+
+<!-- 
+              <script>
+                dataAnime = [sessionStorage.getItem('dataAnime')];
+                $('.card-footer').on('click', '#add-to-card', function(e){
+                  e.preventDefault();
+                  var title = $(this).parent().parent().parent().find('#title_dataAnime').text();
+                  var id = $(this).parent().parent().parent().find('#id_dataAnime').text();
+                  var data = {
+                    title: title,
+                    id: id
+                  };
+                  // ajax get data to url
+                  $.ajax({
+                    url: `/browse/add-to-card/${id}`,
+                    type: 'GET',
+                    data: data,
+                    success: async function(data){
+                      if(data.status == true){
+                        await Swal.fire({
+                          title: 'Success',
+                          text: 'Add to card success',
+                          icon: 'success',
+                          confirmButtonText: 'OK'
+                        });
+                      }else{
+                        await Swal.fire({
+                          title: 'Error',
+                          text: 'Add to card failed',
+                          icon: 'error',
+                          confirmButtonText: 'OK'
+                        });
+                      }
+                    }
+                  });
+                });
+              </script> -->
+
+
+
+          </div>
+    </div>
+  </div>
+

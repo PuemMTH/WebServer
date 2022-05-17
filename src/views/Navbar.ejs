@@ -1,0 +1,27 @@
+<style>
+  .bg-custom {
+    background-color: #611639;
+  }
+</style>
+
+<nav class="navbar navbar-dark text-white bg-custom">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">puem</a>
+    <form class="d-flex">
+      <div class="btn-group">
+        <button type="button" class="btn btn-sm btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+          <i class="fa fa-user"></i>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <!-- <li>
+            <button class="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">ตะกร้า</button>
+          </li> -->
+          <li><a class="dropdown-item" type="button" id="register" href="/register" >Register</a></li>
+          <li><button class="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target="#loginex">Login</button></li>
+        </ul>
+      </div>
+    </form>
+  </div>
+</nav>
+
+<%- include('_model') %>

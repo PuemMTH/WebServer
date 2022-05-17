@@ -1,0 +1,118 @@
+  <% layout('layout') %>
+  
+  <title>
+    <%= title %>
+  </title>
+  <body class="">
+    <%- include('Navbar') %>
+    <div class="container text-white">
+
+      <div class="position-relative overflow-hidden p-3 m-md-3 text-center bg-dark bg-spy rounded">
+        <div class="my-3 bg-spy-no-blur">
+          <h1 class="display-4 font-weight-normal text-start">
+            <br>
+          </h1>
+          <p class="lead font-weight-normal text-start">
+            <br>
+            <br>
+          </p>
+        </div>
+        <div class="my-3 bg-spy-no-blur ">
+          <div class="font-weight-normal text-end">
+            <div class="center">
+              <a class="btn btn-primary" href="/browse">
+                เริ่มต้นค้นหา
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="position-relative overflow-hidden text-center m-md-3 rounded" >
+        <div class="container-fluid">
+
+          <!-- START ROW -->
+          <div class="row g-2">
+
+            <div class="cal col-lg m-2">
+              <div class="row">
+                <div class="col p-1">
+                    <div class="card alert-primary" >
+                      <div class="row g-0">
+                        <div class="col-md-4">
+                          <img src="Anime.gif" class="img-fluid rounded-start" alt="...">
+                        </div>
+                        <div class="col-md-8">
+                          <div class="card-body">
+                            <h4 class="card-title text-start">
+                              <a href="./browse">ค้นหา Anime <i class="fas fa-arrow-right"></i></a>
+                            </h4>
+                            <p class="card-text text-start">
+                              เริ่มต้นค้นหาสิ่งที่คุณชอบได้ที่นี่เลย
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+                <div class="col p-1">
+                    <div class="card alert-primary">
+                      <div class="row g-0">
+                        <div class="col-md-4">
+                          <img src="Anime.gif" class="img-fluid rounded-start" alt="...">
+                        </div>
+                        <div class="col-md-8">
+                          <div class="card-body">
+                            <h4 class="card-title text-start">
+                              <a href="./browse">ค้นหา Anime <i class="fas fa-arrow-right"></i></a>
+                            </h4>
+                            <p class="card-text text-start">
+                              เริ่มต้นค้นหาสิ่งที่คุณชอบได้ที่นี่เลย
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col col-sm-2 m-2">
+              <div class="row">
+                <div class="p-1">
+                  <div class="card shadow p-2 fs-5 bg-info " style="max-width: 300px;">
+                    Anime Top
+                  </div>
+                </div>
+                <div class="p-1">
+                  <% for(let i = 0; i < 5; i++){ %>
+                      <div class="card my-1 shadow bg-body rounded " style="max-width: 300px;">
+                        <div class="row g-0">
+                          <div class="col-md-4">
+                            <img src="<%= dataAnime[i].image %>" class="img-fluid rounded-start" alt="<%= dataAnime[i].title %>">
+                          </div>
+                          <div class="col-md-8">
+                            <div class="card-body">
+                              <p class="card-text text-start">
+                                <small class="text-muted overflow-auto">
+                                  <!-- substring -->
+                                  <%= dataAnime[i].title.substring(0, 22) %>...
+                                </small>
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                  <% } %>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <!-- END ROW -->
+
+        </div>
+      </div>
+
+    </div>

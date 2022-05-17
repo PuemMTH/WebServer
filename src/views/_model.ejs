@@ -1,0 +1,74 @@
+
+<!-- Modal Login -->
+<div class="modal fade" id="loginex" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">LOGIN</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="form-action-login">
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label">Email:</label>
+            <input type="email" class="form-control" name="email" id="recipient-name">
+          </div>
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">Password:</label>
+            <input type="password" class="form-control" name="password" id="message-text">
+          </div>
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">Check answer after click :</label>
+            <input type="submit" class="form-control btn-primary" id="message-text">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // $(document).ready(function() {
+  //   // if click on #loginex button than fetch POST data from form-action-login and send to /auth/login
+  //   // method="POST" enctype="application/x-www-form-urlencoded" action="/auth/login"
+  //   $('#loginex').on('click', '#form-action-login', function(e) {
+  //     e.preventDefault();
+  //     var formData = $(this).serialize();
+  //     $.ajax({
+  //       type: 'POST',
+  //       url: '/auth/login',
+  //       enctype: 'application/x-www-form-urlencoded',
+  //       data: formData,
+  //       success: function(data) {
+  //         if (data.status == true) {
+  //          alert('สำเร็จ');
+  //         } else {
+  //           alert('กรุณาตรวจสอบข้อมูล');
+  //         }
+  //       }
+  //     });
+  //   });
+  // });
+    // if click on #loginex button than fetch POST data from form-action-login and send to /auth/login
+    // method="POST" enctype="application/x-www-form-urlencoded" action="/auth/login"
+    $(function(){
+      $('#form-action-login').submit(function(e){
+        e.preventDefault();
+        var formData = $(this).serialize();
+        $.ajax({
+          type: 'POST',
+          url: '/auth/login',
+          enctype: 'application/x-www-form-urlencoded',
+          data: formData,
+          success: function(data) {
+            if (data.status == true) {
+              alert(data);
+            } else {
+              alert('กรุณาตรวจสอบข้อมูล');
+            }
+          }
+          
+        });
+      });
+    })
+</script>
